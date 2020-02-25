@@ -1,0 +1,173 @@
+<html>
+    <head>
+        <title>Examples</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.3.5/knockout.mapping.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+    </head>
+    <body> 
+ 
+
+        <script>
+            (function(window, document, undefined){
+				var baseURL = "test-api1.zebra.com";        
+
+				function callServiceBytes2(api, method, data, apiKey){
+					var uri = baseURL +api;
+				 
+					if(apiKey == "" || apiKey == undefined || apiKey == null){
+						console.error("Please set an API Key with setApiKey() ");
+						return null;
+					}
+				 
+					if(method == undefined || method == null){
+						method = "GET";
+					}
+					method = method.toLowerCase();
+					switch(method){
+						case "post":
+							method = "POST";
+							break;
+						case "get":
+							method = "GET";
+							break;
+						case "put":
+							method = "PUT";
+							break;
+						case "delete":
+							method = "DELETE";
+							break;
+						default:
+							method = "GET";
+					}
+				 
+					var params = {
+						host: baseURL,
+						port: 443,
+						path: "/v2/tools/" + api,
+						method: method,
+						gzip: true,
+						encoding: "binary",
+						headers:{
+							"apiKey": apiKey,
+							"Content-Type": "image/png"
+						},
+					//    body: data,            
+					//    method: method         
+					};
+				 
+					return new Promise((resolve, reject) => {
+						//Get data
+						var data = [];
+						var request = https.get(params, function(res){
+							res.on('data', function(chunk){
+								data.push(chunk)
+							})
+							.on('end', function(){
+								//console.log("All data received");
+								//console.log(data);
+				 
+								resolve(data)
+							});
+						})
+						request.on('error', function(err){
+							reject(err)
+						})
+					})
+				 
+				}
+
+				function callServiceBytes(api, method, data, apiKey){
+					var uri = "https://" + baseURL + "/v2/tools/" + api;   
+					//var uri = api;                         
+					if(apiKey == "" || apiKey == undefined || apiKey == null){
+						console.error("Please set an API Key with setApiKey() ");
+						return null;                                                
+					}                        
+											   
+					if(method == undefined || method == null){
+						method = "GET";        
+					}                          
+					method = method.toLowerCase();
+					switch(method){            
+						case "post":           
+							method = "POST";   
+							break;             
+						case "get":            
+							method = "GET";    
+							break;             
+						case "put":            
+							method = "PUT";    
+							break;             
+						case "delete":         
+							method = "DELETE"; 
+							break;             
+						default:               
+							method = "GET";    
+											   
+					}                          
+											   
+					var params = {             
+						headers:{              
+							"apiKey": apiKey,                          
+			},                     
+			body: data,            
+			method: method         
+		};                         
+			
+		return new Promise((resolve, reject) => {
+			fetch(uri, params)         
+			.then(data => resolve(data))
+			.catch(error => reject(error) );
+		});
+		
+	}                              
+								 
+	var Create = function(symbology, text, scale, rotation = "N", includeText = false, apiKey){
+		var callFunction = null;
+		if (typeof fetch === "function"){
+			callFunction = callServiceBytes;
+		}else{
+			callFunction = callServiceBytes2;
+		}
+	 
+			return new Promise((resolve, reject) =>{        
+				callFunction(`barcode/generate?symbology=${symbology}&text=${text}&scale=${scale}&rotate=${scale}&includeText=${includeText}`,null, null, apiKey)
+					.then(data => resolve(data ) )
+					.catch(error => reject(error));
+			});
+	}
+	 
+	 
+	function UpcLookup(upc, apiKey){
+		var callFunction = null;
+		if (typeof fetch === "function"){
+			callFunction = callServiceBytes;
+		}else{
+			callFunction = callServiceBytes2;
+		}
+		
+		return new Promise((resolve, reject) => {
+				callFunction(`barcode/lookup?upc=${upc}`, null, null, apiKey)
+					.then(data => resolve(data))
+					.catch(error => reject(error));
+		});
+	}   
+		
+		UpcLookup('047701002292', "I1sUUtRw8aLqzxwW7RwGTkpJxCN06INb")
+		.then(data => { 
+        	var myNewData = JSON.parse(data);
+        	console.log(myNewData);
+		})
+		.catch(error => {
+			console.log("UPC Lookup Failed");
+			console.log(error);
+		});
+
+					
+			})(this, this.document);
+		</script>
+	</body>
+</html>
+
