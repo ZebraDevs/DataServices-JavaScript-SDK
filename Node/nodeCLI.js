@@ -5,27 +5,19 @@ var ZebraSavanna = require("./AllCode.js");
     //ZebraSavanna.setApiKey("I1sUUtRw8aLqzxwW7RwGTkpJxCN06INb");
 const yargs = require("yargs");
 
-const helpDocs = 
-    "UPCLookup:\n" +
-    "\t -i --input : Value to search for \n" +
-    "CreateBarcode: \n" +
-    "\t -i --input : Value to encode with <symbology> \n" +
-    "\t -s --symbology : Symbology type to use for result PNG"
-    "\t -r --rotation : "
-    ;
 
-/*
- yargs.command("", "Use one of the following commands to access ZebraSavanna APIs")
-    .usage("$0 CreateBardcode\n" +
-        "$0 UPCLookup\n" +
-        "$0 DrugLookup\n" +
-        "$0 DrugUPC \n" +
-        "$0 FoodUPC \n" +
-        "$0 DeviceLookup \n"
-    )
-    //.help()
-    .argv
-*/
+yargs.command("Help", "Displays help info", {
+    command: {
+        demandOption: false,
+        type: "string",
+        describe: "Command you wish to learn more about",
+        alias: "c"
+    }
+}, (argv) => {
+    showHelpInfo(argv.command);
+})
+.argv
+
 
 yargs.command("UPCLookup", "Find product details from UPC", {
     value: {
@@ -43,8 +35,6 @@ yargs.command("UPCLookup", "Find product details from UPC", {
 }, (argv) => {
     CallUPCLookup(argv.value, argv.api);
 })
-//.usage(helpDocs)
-//.help()
 .argv
 
 yargs.command("CreateBarcode", "Returns a PNG of <input> of the requested <symbology>", {
@@ -120,6 +110,7 @@ yargs.command("DrugUPC", "See if a drug is recalled by UPC", {
 //.help()
 .argv
 
+
 yargs.command("DrugSearch", "Search recalls of drugs matching <search>", {
     api: {
         demandOption: true,
@@ -145,6 +136,7 @@ yargs.command("DrugSearch", "Search recalls of drugs matching <search>", {
 })
 //.help()
 .argv
+
 
 yargs.command("FoodUPC", "Check for FDA recalls of food matching <search>", {
     api: {
@@ -172,6 +164,7 @@ yargs.command("FoodUPC", "Check for FDA recalls of food matching <search>", {
 //.help()
 .argv
 
+
 yargs.command("DeviceSearch", "Find FDA Recalls for devices matching <search>", {
     api: {
         demandOption: true,
@@ -198,32 +191,73 @@ yargs.command("DeviceSearch", "Find FDA Recalls for devices matching <search>", 
 .help()
 .argv
 
-/*
-connect().use(serveStatic(__dirname)).listen(8080, function(){
-    console.log("Server running on 8080");
-    //ZebraSavanna.setApiKey("I1sUUtRw8aLqzxwW7RwGTkpJxCN06INb");
 
-    //Create Barcode
-    //CallCreateBarcode();
+function showHelpInfo(funcName){
+var DefaultHelp = "Help\n" +
+    "-Display help pages for Savanna barcode APIs\n" +
+    "\t-c --command : Name of command to display help for possible values: CreateBarcode, UPCLookup, DrugUPC, DrugSearch, FoodUPC, DeviceSearch \n" +
+    "\tExample: Help -c CreateBarcode";
 
-    //UPC Lookup
-    //CallUPCLookup();    
+var UPCLookupHelp = "UPCLookup \n"+
+    "-Find product details from UPC value \n"+
+    "\t -a --api : Savanna API key \n"+
+    "\t -i --input : Value to search for \n";
 
-    //FDA Stuff
-    var drugUpc = "1650004019";
-    //CallDrugUpc("1650004019");
-    //CallDrugUpc("826766417759");
-    //CallDrugUpc("016500041085");
-    //CallDrugSearch("Alka");
-    //CallFoodUpc("2676641776");
-    //CallFoodUpc("826766417759");
-    //CallDeviceSearch();
-        
-});
-*/
+var CreateBarcodeHelp = "CreateBarcode \n"+
+    "-Generate a PNG with the supplied value and symbology \n"+
+    "\t -a --api : Savanna API key \n"+
+    "\t -i --input : Value to encode with <symbology> \n"+
+    "\t -s --symbology : Symbology to encode <input> value with \n"+
+    "\t -r --rotation : Orientation for resulting barcode values are (N)ormal, (R)ight rotation, (I)nverted, and (L)eft rotation \n";
 
-function showHelpInfo(){
-    console.log("Fill this out with help info");
+var DrugUPCHelp = "DrugUPC \n"+
+    "-Find FDA recalls by UPC \n"+
+    "\t -a --api : Savanna API key \n"+
+    "\t -i --input : UPC value to search for \n"+
+    "\t -c --count : How many results to return sorted by newest \n";
+
+var DrugSearchHelp = "DrugSearch \n"+
+    "-Search for FDA drug recalls by search term \n"+
+    "\t -a --api : Savanna API Key \n"+
+    "\t -i -s --search : String to search for \n"+
+    "\t -c --count : How many results to return sorted by newest";
+
+var FoodUPCHelp = "FoodUPC \n"+
+    "-Search FDA food recalls by search term \n"+
+    "\t -a --api : Savanna API key \n"+
+    "\t -i -s --search : String to search for \n"+
+    "\t -c --count : How many results to return sorted by newest";
+
+var DeviceSearchHelp = "DeviceSearch \n"+
+    "-Search FDA device recalls for matching devices \n"+
+    "\t -a --api : Savanna API key \n"+
+    "\t -i -s --search : String to search for \n"+
+    "\t -c --count : How many results to return sorted by newest";
+
+    switch(funcName) {
+        case "UPCLookup":
+            console.log(UPCLookupHelp);
+            break;
+        case "CreateBarcode":
+            console.log(CreateBarcodeHelp);
+            break;
+        case "DrugUPC":
+            console.log(DrugUPCHelp);
+            break;
+        case "DrugSearch":
+            console.log(DrugSearchHelp);
+            break;
+        case "FoodUPC":
+            console.log(FoodUPCHelp);
+            break;
+        case "DeviceSearch":
+            console.log(DeviceSearchHelp);
+            break;
+        default:
+            console.log(DefaultHelp);
+            break;
+    }
+
 }
 
 
