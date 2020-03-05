@@ -2,7 +2,7 @@ Zebra Savanna Data Services JavaScript SDK
 ===================================
 
 This is the source code for the Savanna JavaScript SDK.  
-The core of this SDK is a basic API connection call to the Zebra Savanna Data Services in the SavannaAPI class.  Currently the API has public methods for the three public APIs that are part of the Barcode Intelligence Product.  These APIS are:
+The core of this SDK is a basic API connection call to the Zebra Savanna Data Services in the SavannaAPI class.  Currently the API has public methods for the three public APIs that are part of the Barcode Intelligence Product.  These APIs are:
 * Barcode Generate
 * UPC Lookup
 * FDA Recall
@@ -17,47 +17,10 @@ Usage guide
 
 Set Zebra Savanna API key
 
-setApiKey("API-Key-Goes-Here");
-
-FDA Food Recall
-
-
-
-FDA Drug Recall
-
-DrugUpc("Barcode-Value-Goes-Here", result-Count-Goes-Here, baseApiKey)
-    .then( data => {
-        var items = "";
-            var listInfo = "";
-        data.json().then( (d) => {
-            items = d;
-            d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
-                console.log("Drug UPC: " + listInfo);
-        });
-    })
-    .catch( error => {
-    console.log("Drug UPC lookup failed!");
-    });                                                                                                        
-
-UPC Lookup
-
-FoodUpc("Barcode-Value-Goes-Here", result-Count-Goes-Here, baseApiKey)
-    .then( data => {
-        var items = "";
-        var listInfo = "";
-        data.json().then( (d) => {
-            window.items = d;
-            d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
-            console.log("Food UPC: " + listInfo)
-        });
-    })
-    .catch(error => {
-        console.log("Food UPC lookup failed!");
-    });
-
+`setApiKey("API-Key-Goes-Here");`
 
 Create Barcode
-
+```
  Create("Desired-Symbology", "Barcode-Value", scale, "Rotation", showValueText, baseApiKey)
      .then( data => {
          console.log("Create Barcode: " + data);
@@ -89,43 +52,10 @@ Create Barcode
      .then(blob => URL.createObjectURL(blob))
      .then(url => console.log(window.image.src = url))
      .catch(err => console.error(err));
-
-
-FDA Device Recall Search
-
- DeviceSearch("Search-Text-Goes-Here", result-Count-Goes-Here, baseApiKey)
-    .then( data => {
-        var items = "";
-        var listInfo = "";
-        data.json().then( (d) =>  {
-            items = d;
-            d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
-            console.log("Device Search: " + listInfo);
-        });
-    })
-    .catch( error => {
-        console.log("Device lookup failed!")
-    });
-
-
-FDA Drug Recall Search
-
-DrugSearch("Search-Text-Goes-Here", result-Count-Goes-Here, baseApiKey)
-    .then( data => {
-        var items = "";
-        var listInfo = "";
-        data.json().then( (d) => {                                                                 
-            items = d.results;
-             d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
-            console.log("Drug Search: " + listInfo);
-        });
-    })
-    .catch( error => {
-        console.log("Drug Search failed!");
-    });
+```
 
 UPC Lookup
-
+```
 UpcLookup("Barcode-Value-Goes-Here", baseApiKey)
     .then(data => { 
         var items = "";
@@ -140,3 +70,72 @@ UpcLookup("Barcode-Value-Goes-Here", baseApiKey)
         console.log("UPC Lookup Failed");
         console.log(error);
     });
+```
+
+FDA Food Recall
+```
+FoodUpc("Barcode-Value-Goes-Here", result-Count-Goes-Here, baseApiKey)
+    .then( data => {
+        var items = "";
+        var listInfo = "";
+        data.json().then( (d) => {
+            window.items = d;
+            d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
+            console.log("Food UPC: " + listInfo)
+        });
+    })
+    .catch(error => {
+        console.log("Food UPC lookup failed!");
+    });
+```
+
+FDA Drug Recall
+```
+DrugUpc("Barcode-Value-Goes-Here", result-Count-Goes-Here, baseApiKey)
+    .then( data => {
+        var items = "";
+            var listInfo = "";
+        data.json().then( (d) => {
+            items = d;
+            d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
+                console.log("Drug UPC: " + listInfo);
+        });
+    })
+    .catch( error => {
+    console.log("Drug UPC lookup failed!");
+    });                                                                                                        
+```
+
+FDA Device Recall Search
+```
+ DeviceSearch("Search-Text-Goes-Here", result-Count-Goes-Here, baseApiKey)
+    .then( data => {
+        var items = "";
+        var listInfo = "";
+        data.json().then( (d) =>  {
+            items = d;
+            d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
+            console.log("Device Search: " + listInfo);
+        });
+    })
+    .catch( error => {
+        console.log("Device lookup failed!")
+    });
+```
+
+FDA Drug Recall Search
+```
+DrugSearch("Search-Text-Goes-Here", result-Count-Goes-Here, baseApiKey)
+    .then( data => {
+        var items = "";
+        var listInfo = "";
+        data.json().then( (d) => {                                                                 
+            items = d.results;
+             d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
+            console.log("Drug Search: " + listInfo);
+        });
+    })
+    .catch( error => {
+        console.log("Drug Search failed!");
+    });
+```
