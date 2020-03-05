@@ -11,6 +11,11 @@ The core of this SDK is a basic API connection call to the Zebra Savanna Data Se
 ### API Key
 To get an API key to work with these APIs, use the [Getting Started Guide](https://developer.zebra.com/gsg) and select the Barcode Intelligence product. 
 
+### Built-in Help
+
+To use the built-in help function, use the following command:
+
+`node Node/SavannaBarcode.js Help`
 
 Usage guide
 -----------
