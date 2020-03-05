@@ -1,4 +1,4 @@
-Zebra Savanna Data Servcies JavaScript SDK
+Zebra Savanna Data Services JavaScript SDK
 ===================================
 
 This is the source code for the Savanna JavaScript SDK.  
