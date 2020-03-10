@@ -76,6 +76,12 @@ yargs.command("CreateBarcode", "Returns a PNG of <input> of the requested <symbo
         describe: "Toggle <input> from showing",
         default: true,
         alias: "t"
+    },
+    output: {
+        demandOption: false,
+        type: "string",
+        describe: "Location to write output file with trailing slash",
+        alias: "o"
     }
 }, (argv) => {
     CallCreateBarcode(argv.input, argv.symbology, argv.api);
@@ -208,7 +214,8 @@ var CreateBarcodeHelp = "CreateBarcode \n"+
     "\t -a --api : Savanna API key \n"+
     "\t -i --input : Value to encode with <symbology> \n"+
     "\t -s --symbology : Symbology to encode <input> value with \n"+
-    "\t -r --rotation : Orientation for resulting barcode values are (N)ormal, (R)ight rotation, (I)nverted, and (L)eft rotation \n";
+    "\t -r --rotation : Orientation for resulting barcode values are (N)ormal, (R)ight rotation, (I)nverted, and (L)eft rotation \n" +
+    "\t -o --output : Location to write output file with trailing slash";
 
 var DrugUPCHelp = "DrugUPC \n"+
     "-Find FDA recalls by UPC \n"+
@@ -261,14 +268,14 @@ var DeviceSearchHelp = "DeviceSearch \n"+
 }
 
 
-function CallCreateBarcode(upc, symbology, apiKey){
+function CallCreateBarcode(upc, symbology, apiKey, output){
 
-        ZebraSavanna.BarcodeCreate(symbology, upc, 1, "N", true, apiKey)
+        ZebraSavanna.BarcodeCreate(symbology, upc, 1, "N", true, output, apiKey)
             .then(data => {
                 console.log("Create Barcode writing to disk");
                 var newData = data;
                     //.toString().replace("/^data:image\/\w+;base64", '');
-                fs.writeFile(upc+".png", newData, "binary", (err) => { if(err){ console.log("Error: " + err); throw err; } } )
+                fs.writeFile( output + upc+".png", newData, "binary", (err) => { if(err){ console.log("Error: " + err); throw err; } } )
             })
             .catch(error => {
                 console.log("Create Barcode failed");

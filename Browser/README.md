@@ -13,13 +13,6 @@ API Key
 
 To get an API key to work with these APIs, use the [Getting Started Guide](https://developer.zebra.com/gsg) and select the Barcode Intelligence product.
 
-Built-in Help
--------------
-
-To use the built-in help function, use the following command:
-
-`node Node/SavannaBarcode.js Help`
-
 Usage guide
 -----------
 
@@ -33,7 +26,6 @@ Create Barcode
  Create("Desired-Symbology", "Barcode-Value", scale, "Rotation", showValueText, baseApiKey)
      .then( data => {
          console.log("Create Barcode: " + data);
-         window.myData = data.body;
          var reader = data.body.getReader();
          var imgData = "";
          window.image = document.createElement('img');
@@ -89,7 +81,6 @@ FoodUpc("Barcode-Value-Goes-Here", result-Count-Goes-Here, baseApiKey)
         var items = "";
         var listInfo = "";
         data.json().then( (d) => {
-            window.items = d;
             d.results.forEach(function(i, ind, arr){ listInfo += JSON.stringify(i); });
             console.log("Food UPC: " + listInfo)
         });
