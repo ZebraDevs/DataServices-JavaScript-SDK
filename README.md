@@ -18,14 +18,18 @@ Built-in Help
 
 To use the built-in help function, use the following command:
 
-`node Node/SavannaBarcode.js Help`
+```bash
+node Node/SavannaBarcode.js Help
+```
 
 Usage guide
 -----------
 
 Set Zebra Savanna API key
 
-`setApiKey("API-Key-Goes-Here");`
+```javascript
+setApiKey("API-Key-Goes-Here");
+```
 
 Create Barcode
 
