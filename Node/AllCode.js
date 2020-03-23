@@ -640,13 +640,13 @@ var Symbology =
 		"upcecomposite":"upcecomposite"
 	}
 
-/*module.exports = {
-    BarcodeCreate: Create,
+module.exports = {
+    BarcodeCreate: CreateBarcode,
     setApiKey: setApiKey,
-    UpcLookup: UpcLookup,
+    UpcLookup: UPCLookup,
     DrugUpc: DrugUpc,
     DrugSearch: DrugSearch,
     DeviceSearch: DeviceSearch,
     FoodUpc: FoodUpc
 }
-*/
+

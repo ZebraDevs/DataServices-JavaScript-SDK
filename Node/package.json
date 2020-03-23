@@ -1,10 +1,14 @@
 {
-  "name": "SavannaBarcode",
+  "name": "savanna_barcode",
   "version": "1.0.0",
   "description": "Allows you to use Zebra Technologies' Savanna Barcode APIs",
   "main": "SavannaBarcode.js",
   "dependencies": {
     "yargs": "^15.1.0"
+  },
+  "repository":{
+    "type":"git",
+    "url": "https://github.com/Zebra/Savanna-JavaScript-SDK.git"
   },
   "devDependencies": {},
   "scripts": {
@@ -12,5 +16,6 @@
     "start": "node server.js"
   },
   "author": "Zebra Technologies",
-  "license": "ISC"
+  "license": "ISC",
+  "keywords": []
 }
