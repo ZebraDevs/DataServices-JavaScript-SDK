@@ -2,7 +2,6 @@ var http = require("http");
 global.https = require("https");
 const fs = require('fs');
 var ZebraSavanna = require("./AllCode.js");
-    //ZebraSavanna.setApiKey("I1sUUtRw8aLqzxwW7RwGTkpJxCN06INb");
 const yargs = require("yargs");
 
 
@@ -274,7 +273,6 @@ function CallCreateBarcode(upc, symbology, apiKey, output){
             .then(data => {
                 console.log("Create Barcode writing to disk");
                 var newData = data;
-                    //.toString().replace("/^data:image\/\w+;base64", '');
                 fs.writeFile( output + upc+".png", newData, "binary", (err) => { if(err){ console.log("Error: " + err); throw err; } } )
             })
             .catch(error => {
@@ -285,9 +283,8 @@ function CallCreateBarcode(upc, symbology, apiKey, output){
 
 function CallUPCLookup(upcValue, apiKey){
 
-        ZebraSavanna.UpcLookup(upcValue, apiKey)//"047701002292")
+        ZebraSavanna.UpcLookup(upcValue, apiKey)
         .then(data => { 
-                //console.log("Returned Data: " + data);
                 var myNewData = JSON.parse(data);
                 console.log(myNewData);
         })
@@ -302,7 +299,6 @@ function CallDeviceSearch(search, count, apiKey){
         ZebraSavanna.DeviceSearch(search, count)
             .then(data => {
                 console.log("Device Search Info");
-                //console.log("Returned Data: " + data);
                 var myNewData = JSON.parse(data);
                 console.log(myNewData);
             })
@@ -318,7 +314,6 @@ function CallFoodUpc(upc, count, apiKey){
         ZebraSavanna.FoodUpc(upc, count, apiKey)
             .then(data =>{
                 console.log("Food UPC Info");
-                //console.log("Returned Data: " + data);
                 var myNewData = JSON.parse(data);
                 console.log(myNewData);
             })
@@ -334,7 +329,6 @@ function CallDrugSearch(drugUPC, count, apiKey){
         ZebraSavanna.DrugSearch(drugUPC, count, apiKey)
             .then(data =>{
                 console.log("Drug Search");
-                //console.log("Returned Data: " + data);
                 var myNewData = JSON.parse(data);
                 console.log(myNewData);
             })
@@ -350,7 +344,6 @@ function CallDrugUpc(drugUPC, count, apiKey){
         ZebraSavanna.DrugUpc(drugUPC, count, apiKey)
             .then(data =>{
                 console.log("Drug UPC Info")
-                //console.log("Returned Data: " + data);
                 var myNewData = JSON.parse(data);
                 console.log(myNewData);
             })
