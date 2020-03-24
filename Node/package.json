@@ -1,6 +1,6 @@
 {
   "name": "barcode_intelligence_cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Allows you to use Zebra Technologies' Savanna Barcode API",
   "main": "SavannaBarcode.js",
   "bin": {
