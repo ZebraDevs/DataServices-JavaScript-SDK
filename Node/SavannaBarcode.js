@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var http = require("http");
 global.https = require("https");
 const fs = require('fs');
